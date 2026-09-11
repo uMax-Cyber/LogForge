@@ -4,13 +4,22 @@
 
 </div>
 
-# LogForge — Markazlashtirilgan Syslog
+# LogForge — Централизованный Syslog
 
-Multi-vendor syslog hub: marshrutlash, filtr tartibi, hajm rejalashtirish.
+Markazlashtirilgan syslog: marshrutlash, filtr tartibi, hajm rejalashtirish.
 
 ## Skrinshot
 
 ![Namoyish](screenshots/demo.svg)
 
-## Litsenziya
-MIT
+## 📬 Aloqa
+
+Savollar bormi? Yozing: **[allumaxmail@gmail.com](mailto:allumaxmail@gmail.com)**
+
+---
+
+<div align="center">
+
+**🇬🇧 [English](README.md) · 🇷🇺 [Русский](README.ru.md) · 🇺🇿 [Oʻzbekcha](README.uz.md)**
+
+</div>
