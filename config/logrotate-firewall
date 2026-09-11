@@ -1,0 +1,8 @@
+/var/log/firewall.log {
+    hourly
+    rotate 24
+    compress
+    missingok
+    notifempty
+    maxsize 500M
+}
