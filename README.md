@@ -1,6 +1,10 @@
+[English](README.md) | [Русский](README.ru.md)
+
 # Smart Syslog Hub
 [![CI](https://github.com/uMax-Cyber/LogForge/actions/workflows/ci.yml/badge.svg)](https://github.com/uMax-Cyber/LogForge/actions/workflows/ci.yml)
 
+
+![Demo](screenshots/demo.svg)
 Centralized syslog receiver with intelligent filtering for multi-vendor networks. Routes logs by source device type (firewalls vs network gear vs servers), handles multi-interface firewall source IPs, and includes rotation policies tuned for high-volume environments.
 
 ## Architecture
