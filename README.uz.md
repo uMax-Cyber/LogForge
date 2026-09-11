@@ -11,7 +11,7 @@
 
 
 ![Namoyish](screenshots/demo.svg)
-Koʻp vendorli tarmoqlar uchun aqlli filtrlash bilan markazlashtirilgan syslog qabul qiluvchisi. Loglarni manba qurilma turiga qarab yoʻnaltiradi (fayrvollar, tarmoq uskunalari, serverlar), koʻp interfeysli fayrvollarning source-IP-larini qayta ishlaydi va katta hajmlar uchun sozlangan rotatsiya siyosatlarini oʻz ichiga oladi.
+Koʻp vendorli tarmoqlar uchun aqlli filtrlashga ega markazlashtirilgan syslog qabulqilgichi. Loglar manba turiga qarab ajratiladi (fayrvol, tarmoq uskunasi, server), koʻp interfeysli fayrvollarning source-IP-lari toʻgʻri ishlanadi, katta hajm uchun rotatsiya siyosati ham oldindan tayyor.
 
 ## Arxitektura
 
@@ -23,30 +23,30 @@ Linux servers ────────────────┘         │
                                   Logrotate (per-source policy)
 ```
 
-## Asosiy xatolar (real joylashtirishdan)
+## Real joylashtirishdan olingan saboqlar
 
-### 1. Koʻp interfeysli fayrvollar egress-IP dan yuboradi
-10+ interfeysli fayrvol syslogni oʻzining LAN egress-IP sidan yuborishi mumkin, management-IP dan EMAS. Sizning «management-IP» filtringiz barcha fayrvol loglarini sezilmaydi oʻtkazib yuboradi.
+### 1. Fayrvol loglari egress-IP-dan keladi
+10+ interfeysli fayrvol syslogni management-IP-dan emas, balki LAN egress-IP-sidan yuborishi mumkin. «Management-IP» boʻyicha yozilgan filtr barcha fayrvol loglarini sezilmaydan oʻtkazib yuboradi.
 
-**Yechimi**: filtrlarni yozishdan oldin haqiqiy source-IP-larni ushlab oling. Barcha maʼlum interfeys IP-larini qoʻshing.
+**Yechimi**: filtrlarni yozishdan oldin haqiqiy source-IP-larni ushlab oling va barcha maʼlum interfeys IP-larini kiritng.
 
-### 2. Fayl huquqlari (jim xato)
-rsyslog `syslog` foydanuvchisidan ishlaydi, root dan emas. Agar log fayllari `root:root` ga tegishli boʻlsa, rsyslogning oʻz logida jim `Permission denied` olasiz, tarmoq loglari esa tashlab yuboriladi.
+### 2. Fayl huquqlari (jimgina xato)
+rsyslog root emas, `syslog` foydalanuvchisi nomidan ishlaydi. Log fayllari `root:root` ga tegishli boʻlsa, tarmoq loglari tashlab yuboriladi, xato esa faqat rsyslogning oʻz logida `Permission denied` sifatida koʻrinadi.
 
 **Yechimi**: `chown syslog:adm /var/log/network.log`
 
 ### 3. Filtrlar tartibi muhim
-Keng filtr (`startswith "10.0.0."`) aniq filtr (`isequal "10.0.0.254"`) dan oldin yuklansa, aniq qurilmaning loglarini oʻziga tortib oladi.
+Keng filtr (`startswith "10.0.0."`) aniq filtr (`isequal "10.0.0.254"`) dan oldin yuklansa, aniq qurilmaning loglari shu keng filtrga tushib qoladi.
 
-**Yechimi**: konfig fayllarini aniq filtrlar birinchi yuklanadigan qilib nomlang (59-firewall.conf, 60-network.conf dan oldin).
+**Yechimi**: konfig fayllarini aniq filtrlar birinchi yuklanadigan qilib nomlang (59-firewall.conf — 60-network.conf-dan oldin).
 
 ### 4. Hajmni rejalashtirish
-«Allowed» sessiyalarini loglayotgan bitta fayrvol **21 000 qator/daqiqa** (~7 GB/kun) hosil qilishi mumkin. Logrotate-ni bunga mos rejalashtiring.
+«Allowed» sessiyalarini ham loglaydigan bitta fayrvol 21 000 qator/daqiqa (~7 GB/kun) chiqarishi mumkin. Logrotate-ni shunga moslab sozlang.
 
 ## Konfiguratsiya fayllari
 
-- `config/59-firewall.conf` — aniq IP filtrlari (BIRINCHI yuklanadi)
-- `config/60-network-devices.conf` — keng tarmoq qurilmalari filtri
+- `config/59-firewall.conf` — aniq IP boʻyicha filtrlar (BIRINCHI yuklanadi)
+- `config/60-network-devices.conf` — tarmoq qurilmalari uchun keng filtr
 - `config/logrotate-firewall` — yuqori hajmli fayrvol loglari uchun agressiv rotatsiya
 
 ## Litsenziya
